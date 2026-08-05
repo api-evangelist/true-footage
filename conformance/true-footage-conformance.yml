@@ -1,0 +1,80 @@
+generated: '2026-08-05'
+method: derived
+source: well-known/true-footage-truetracts-openid-configuration.json
+description: >-
+  Cross-cutting standards conformance for True Footage, derived strictly from the two
+  OpenID Connect discovery documents its identity hosts serve anonymously and from the
+  observed behaviour of its product API hosts. True Footage publishes no compliance
+  page, no certification claims, and no API documentation, so nothing here is asserted
+  from marketing copy — every `conforms: true` points at a fetched document.
+standards:
+  - id: oidc
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence: >-
+      Both identity hosts serve a complete, correctly-typed
+      /.well-known/openid-configuration (HTTP 200, application/json) carrying issuer,
+      authorization_endpoint, token_endpoint, userinfo_endpoint, jwks_uri,
+      response_types_supported, subject_types_supported and
+      id_token_signing_alg_values_supported.
+    urls:
+      - https://auth.truetracts.truefootage.tech/.well-known/openid-configuration
+      - https://auth.trueengine.truefootage.tech/.well-known/openid-configuration
+    note: >-
+      The conformance is inherited from the Auth0 tenants True Footage runs under its own
+      custom domains, not from software True Footage authored.
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749) + Authorization Server Metadata (RFC 8414)
+    conforms: true
+    evidence: >-
+      /.well-known/oauth-authorization-server returns 200 on the TrueTracts identity host
+      with the RFC 8414 metadata set. authorization_code, client_credentials,
+      refresh_token, device_code and token-exchange grants are advertised.
+    urls:
+      - https://auth.truetracts.truefootage.tech/.well-known/oauth-authorization-server
+  - id: pkce
+    name: 'OAuth 2.0 PKCE (RFC 7636)'
+    conforms: true
+    evidence: 'code_challenge_methods_supported advertises S256 and plain.'
+  - id: oauth-protected-resource
+    name: 'OAuth 2.0 Protected Resource Metadata (RFC 9728)'
+    conforms: false
+    evidence: >-
+      /.well-known/oauth-protected-resource returns 404 on the identity hosts and 401 on
+      both API hosts, so no resource-to-authorization-server binding is discoverable.
+  - id: rfc9116
+    name: 'security.txt (RFC 9116)'
+    conforms: false
+    evidence: >-
+      https://www.truefootage.tech/.well-known/security.txt returns 404 ("Invalid
+      .well-known request"). No vulnerability disclosure contact is published.
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence: >-
+      /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs, /docs and
+      /redoc were probed on both product API hosts, both product web apps and the
+      marketing site. The API hosts answer 401 on all of them; the web hosts answer 404.
+  - id: rfc9457
+    name: 'Problem Details for HTTP APIs (RFC 9457)'
+    conforms: false
+    evidence: >-
+      The only anonymous error payload observed is
+      {"detail":"authorization header is expected"} served as application/json — a
+      FastAPI-shaped envelope, not application/problem+json.
+  - id: scim
+    name: 'SCIM 2.0'
+    conforms: unknown
+    evidence: >-
+      A host named scim.truefootage.tech resolves and answers 200, but it serves a web app
+      shell, and /scim/v2/ServiceProviderConfig and /scim/v2/Schemas both return 404. No
+      SCIM service provider configuration is discoverable anonymously.
+  - id: uad
+    name: 'Uniform Appraisal Dataset / URAR (FNMA-FHLMC)'
+    conforms: unknown
+    evidence: >-
+      True Footage's public content describes producing Uniform Residential Appraisal
+      Reports, but no UAD/MISMO data exchange contract, schema, or conformance statement
+      is published on its site.
+    urls:
+      - https://www.truefootage.tech/articles/uniform-residential-appraisal-report-guide

@@ -1,0 +1,95 @@
+generated: '2026-08-05'
+method: probed
+description: >-
+  Results of probing the /.well-known/ discovery surface for every True Footage host
+  reachable without credentials — the marketing site (Webflow), the two product web
+  apps (TrueTracts, TrueEngine), the two product API hosts, and the two Auth0 custom
+  identity domains. Hosts were enumerated from the public site plus Certificate
+  Transparency (api.certspotter.com, truefootage.tech + subdomains). Status is the
+  HTTP code observed at fetch time. Only the two OpenID Connect discovery documents
+  returned a real, correctly-typed payload; they are saved verbatim. Every other path
+  answered a hard 404 or a 401 — no soft-200 HTML shells were credited as documents.
+source: https://auth.truetracts.truefootage.tech/.well-known/openid-configuration
+hosts:
+  - host: https://auth.truetracts.truefootage.tech
+    note: >-
+      Auth0 custom identity domain fronting the TrueTracts appraiser console. The
+      discovery document and JWKS are served anonymously; everything behind them
+      requires a tenant login.
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        type: application/json
+        file: true-footage-truetracts-openid-configuration.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        type: application/json
+        note: identical payload to the openid-configuration document; not duplicated on disk
+      - path: /.well-known/jwks.json
+        status: 200
+        type: application/json
+        note: live signing keys — deliberately not archived, they rotate
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+  - host: https://auth.trueengine.truefootage.tech
+    note: >-
+      Auth0 custom identity domain fronting TrueEngine. Same anonymous discovery
+      surface as the TrueTracts tenant.
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        type: application/json
+        file: true-footage-trueengine-openid-configuration.json
+  - host: https://api.truetracts.truefootage.tech
+    note: >-
+      TrueTracts product API. Every path — including /openapi.json, /docs and every
+      /.well-known/* path — answers 401 {"detail":"authorization header is expected"}.
+      Only /health is anonymous. The contract is gated at the edge.
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 401
+      - path: /.well-known/oauth-protected-resource
+        status: 401
+      - path: /.well-known/agent-card.json
+        status: 401
+  - host: https://api.trueengine.truefootage.tech
+    note: TrueEngine product API. Identical 401-on-everything posture.
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 401
+      - path: /.well-known/oauth-protected-resource
+        status: 401
+      - path: /.well-known/agent-card.json
+        status: 401
+  - host: https://www.truefootage.tech
+    note: >-
+      Webflow-hosted marketing site. Every /.well-known/* path returns an 88-byte
+      404 body reading "Invalid .well-known request" — a real 404, not a soft 200.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://truetracts.truefootage.tech
+    note: Next.js app shell; root 302s to the Auth0 universal login.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://trueengine.truefootage.tech
+    documents:
+      - path: /.well-known/agent-card.json
+        status: 404
