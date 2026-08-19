@@ -18,7 +18,7 @@ url: https://raw.githubusercontent.com/api-evangelist/true-footage/refs/heads/ma
 x-type: company
 x-source: harvest:secondary-market
 x-harvest-source: https://forgeglobal.com/true-footage_stock/
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
