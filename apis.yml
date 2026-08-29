@@ -13,6 +13,17 @@ description: >-
   ACI and ClickFORMS form fillers. The company has raised roughly $119M. There is no public
   developer program: the platform APIs are real and reachable but reject every unauthenticated
   request, and no OpenAPI, developer portal or API reference is published.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/673cdf161331913bdbf34fa9/684127ba41eae9cf49e4fe40_graph_image.png
 url: https://raw.githubusercontent.com/api-evangelist/true-footage/refs/heads/main/apis.yml
 x-type: company
