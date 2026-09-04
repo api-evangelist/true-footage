@@ -24,6 +24,20 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  probe_state: gated
+  source:
+  - authentication
+  - security
+  generated: '2026-09-03'
+  method: derived
 image: https://cdn.prod.website-files.com/673cdf161331913bdbf34fa9/684127ba41eae9cf49e4fe40_graph_image.png
 url: https://raw.githubusercontent.com/api-evangelist/true-footage/refs/heads/main/apis.yml
 x-type: company
