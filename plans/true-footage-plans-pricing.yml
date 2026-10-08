@@ -1,0 +1,31 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://www.truefootage.tech/tools
+sources:
+- https://www.truefootage.tech/tools
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+published: true
+note: Appraiser tools page listing two subscription tiers (TrueTracts); no API usage pricing stated.
+plan_count: 2
+currency: USD
+plans:
+- name: PRO
+  price_text: PRO for $99/ month
+  price: 99
+  currency: USD
+  period: month
+- name: Basic
+  price_text: Basic for $49/ month
+  price: 49
+  currency: USD
+  period: month
